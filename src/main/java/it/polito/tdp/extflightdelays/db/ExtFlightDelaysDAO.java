@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import it.polito.tdp.extflightdelays.model.Airline;
 import it.polito.tdp.extflightdelays.model.Airport;
+import it.polito.tdp.extflightdelays.model.CoppieFlight;
 import it.polito.tdp.extflightdelays.model.Flight;
 
 public class ExtFlightDelaysDAO {
@@ -93,13 +96,14 @@ public class ExtFlightDelaysDAO {
 		}
 	}
 
-	public List<CoppieFlight> uniqueCoppieFlight(Map<Integer, Airport> airportIdMap) {
-		String sql = "SELECT DISTINCT ORIGIN_AIRPORT_ID, DESTINATION_AIRPORT_ID, DISTANCE FROM flights";
+	public List<CoppieFlight> uniqueCoppieFlight(Map<Integer, Airport> airportIdMap, int miglia) {
+		String sql = "SELECT DISTINCT ORIGIN_AIRPORT_ID, DESTINATION_AIRPORT_ID, DISTANCE FROM flights WHERE DISTANCE >= ?";
 		List<CoppieFlight> result = new ArrayList<CoppieFlight>();
 
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, miglia);
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {

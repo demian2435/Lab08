@@ -1,6 +1,4 @@
-package it.polito.tdp.extflightdelays.db;
-
-import it.polito.tdp.extflightdelays.model.Airport;
+package it.polito.tdp.extflightdelays.model;
 
 public class CoppieFlight {
 	private Airport partenza;
@@ -41,7 +39,5 @@ public class CoppieFlight {
 	public String toString() {
 		return partenza + ", " + arrivo + ", " + distanza;
 	}
-	
-	
 
 }
